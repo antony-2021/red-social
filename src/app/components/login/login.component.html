@@ -1,15 +1,17 @@
+
 <div class="login-container">
+    <!-- Formulario de Login -->
+    @if (!showRegisterForm){
     <div class="login-card">
         <h1 class="h1-login">Login</h1>
-        <form (ngSubmit)="onSubmit()">
+        <form (ngSubmit)="onSubmitLogin()">
             <div class="form-group">
                 <label for="username">Usuario</label>
                 <input id="username" type="text" [(ngModel)]="username" name="username" #usernameInput="ngModel"
                     required placeholder="Ingrese su usuario" />
                 @if (usernameInput.invalid && usernameInput.touched) {
-                <p class="error-message">
-                    El usuario es obligatorio.
-                </p>
+                <p class="error-message">El usuario es
+                    obligatorio.</p>
                 }
 
             </div>
@@ -18,13 +20,66 @@
                 <input id="password" type="password" [(ngModel)]="password" name="password" #passwordInput="ngModel"
                     required placeholder="Ingrese su contraseña" />
                 @if (passwordInput.invalid && passwordInput.touched) {
-                <small class="error-message">
-                    La contraseña es obligatoria.
-                </small>
+                <small class="error-message">La contraseña es
+                    obligatoria.</small>
                 }
 
             </div>
             <button type="submit" [disabled]="!username || !password">Ingresar</button>
         </form>
+        <div class="google-login">
+            <button id="google-login" class="google-btn" (click)="loginGoogle()">
+              <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" alt="Sign in with Google" />
+            </button>
+          </div>
+        <div class="register">
+            <p>No tienes cuenta? <a (click)="toggleRegisterForm()">Registrarse</a></p>
+        </div>
+
+        <div class="register">
+            <p>Recuperar? <a (click)="resetPassword()">Recuperar</a></p>
+        </div>
     </div>
+    }
+    <!-- Formulario de Registro -->
+    @else {
+    <div class="register-card">
+        <h1 class="h1-register">Registro</h1>
+        <form (ngSubmit)="onSubmitRegister()">
+            <div class="form-group">
+                <label for="name">Nombre</label>
+                <input id="name" type="text" [(ngModel)]="name" name="name" #nameInput="ngModel" required
+                    placeholder="Ingrese su nombre" />
+                @if (nameInput.invalid && nameInput.touched) {
+                <p class="error-message">El nombre es obligatorio.</p>
+                }
+            </div>
+            <div class="form-group">
+                <label for="email">Correo Electrónico</label>
+                <input id="email" type="email" [(ngModel)]="email" name="email" #emailInput="ngModel" required
+                    placeholder="Ingrese su correo" />
+                @if (emailInput.invalid && emailInput.touched) {
+                <p class="error-message">El correo es obligatorio y
+                    debe ser válido.</p>
+                }
+
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input id="password" type="password" [(ngModel)]="password" name="password" #passwordInput="ngModel"
+                    required placeholder="Ingrese su contraseña" />
+                @if (passwordInput.invalid && passwordInput.touched) {
+                <p class="error-message">La contraseña es
+                    obligatoria.</p>
+                }
+
+            </div>
+            <button type="submit" [disabled]="!name || !email || !password">Registrar</button>
+        </form>
+        <div class="register">
+            <p>¿Ya tienes cuenta? <a class="obtion" (click)="toggleRegisterForm()">Iniciar sesión</a></p>
+        </div>
+    </div>
+    }
+
 </div>
