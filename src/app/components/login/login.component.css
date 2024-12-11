@@ -1,0 +1,156 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.h1-login{
+    color: white;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 97vh;
+    background-color: rgb(196, 207, 243);
+}
+
+.login-card {
+    background: radial-gradient(circle, #2c47c2, #182ea8);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    transform: translateY(-10%);
+    animation: fadeIn 0.6s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    margin-top: 0.3rem;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: rgb(84, 69, 173);
+    /* Rojo vibrante en el borde */
+    box-shadow: 0 0 5px rgba(44, 9, 240, 0.5);
+}
+
+button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    color: white;
+    background: #000f66;
+    /* Gradiente cálido para el botón */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+button:hover:enabled {
+    background: #1731c2;
+    /* Gradiente cálido cuando se pasa el cursor */
+    transform: translateY(-2px);
+}
+
+.error-message {
+    color: #ee4532;
+    /* Rojo para los mensajes de error */
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.error-message.active {
+    opacity: 1;
+}
+
+.register {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.register a {
+    color: #ff8c00;
+    /* Naranja cálido para el enlace */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.register a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .title {
+        font-size: 1.6rem;
+    }
+
+    input {
+        font-size: 1rem;
+        padding: 0.9rem;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 0.9rem;
+    }
+}
