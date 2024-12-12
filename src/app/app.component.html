@@ -1,3 +1,94 @@
+<div class="div-body">
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo">
+                <span class="logo-text">UNAJMA</span>
+                <div class="logo-shine"></div>
+            </div>
+        </div>
 
+        <div class="nav-links">
+            <a href="/dashboard" class="nav-link active">
+                <span>Home</span>
+                <div class="link-effect"></div>
+            </a>
+            <a href="#" class="nav-link">
+                <span>Products</span>
+                <div class="link-effect"></div>
+            </a>
+            <a href="#" class="nav-link">
+                <span>Services</span>
+                <div class="link-effect"></div>
+            </a>
+            <a href="/edit-perfil" class="nav-link">
+                <span>Perfil</span>
+                <div class="link-effect"></div>
+            </a>
+            <a href="#" class="nav-link">
+                <span>Contact</span>
+                <div class="link-effect"></div>
+            </a>
+        </div>
+
+        @if (isLogin() | async) {
+            <div class="nav-actions">
+                <button class="action-btn" (click)="cerrarSession()">
+                    <div class="btn-text">Salir</div>
+                    <div class="btn-effect"></div>
+                </button>
+            </div>    
+        }
+        @else {
+            <div class="nav-actions">
+                <button class="action-btn" (click)="navigate('login')">
+                    <div class="btn-text">Login</div>
+                    <div class="btn-effect"></div>
+                </button>
+            </div>
+        }
+
+        <button class="mobile-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+   <!--
+    <div class="mobile-menu">
+        <div class="menu-header">
+            <div class="logo">
+                <span class="logo-text">Premium</span>
+            </div>
+            <button class="close-menu">
+                <span class="close-icon"></span>
+            </button>
+        </div>
+        <div class="menu-links">
+            <a href="#" class="menu-link active">
+                <span>Home</span>
+            </a>
+            <a href="#" class="menu-link">
+                <span>Products</span>
+            </a>
+            <a href="#" class="menu-link">
+                <span>Services</span>
+            </a>
+            <a href="/edit-perfil" class="menu-link">
+                <span>Perfil</span>
+            </a>
+            <a href="#" class="menu-link">
+                <span>Contact</span>
+            </a>
+        </div>
+        <div class="menu-footer">
+            <button class="mobile-action-btn">
+                <span>Sign In</span>
+            </button>
+        </div>
+    </div>-->
+</div>
+
+<br><br><br>
 
 <router-outlet />

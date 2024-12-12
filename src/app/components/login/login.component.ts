@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { AlertService } from '../../services/alert.service';
 import Swal from 'sweetalert2';
+import { AlertService } from '../../services/alert.service';
+import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
-import { UserEntity } from '../../model/user-entity';
 
 @Component({
   selector: 'app-login',

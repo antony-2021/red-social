@@ -23,9 +23,11 @@ export class AuthService {
       if (user) {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
+        localStorage.setItem("email", user?.email+"")
       } else {
         try {
           localStorage.setItem('user', 'null');
+          localStorage.setItem("email", 'null')
         } catch (error) {
 
         }
@@ -39,6 +41,7 @@ export class AuthService {
       .then((userCredential) => {
         this.userData = userCredential.user
         this.observeUserState()
+        localStorage.setItem("email", email)
       })
       .catch((error) => {
         this.alertService.alertWarning(error.message);
@@ -87,6 +90,8 @@ export class AuthService {
           enabled: true
         }
         this.userService.add(user)
+
+        localStorage.setItem("email", user?.email+"")
         this.userData = userCredential.user
         this.observeUserState()
       })
@@ -122,7 +127,12 @@ export class AuthService {
   logOut() {
     return this.firebaseAuthenticationService.signOut().then(() => {
       localStorage.removeItem('user');
+      localStorage.removeItem("email")
       this.router.navigate(['login']);
     })
+  }
+
+  getEmail(){
+    return localStorage.getItem("email")+"";
   }
 }
