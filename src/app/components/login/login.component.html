@@ -6,11 +6,11 @@
         <h1 class="h1-login">Login</h1>
         <form (ngSubmit)="onSubmitLogin()">
             <div class="form-group">
-                <label for="username">Usuario</label>
-                <input id="username" type="text" [(ngModel)]="username" name="username" #usernameInput="ngModel"
-                    required placeholder="Ingrese su usuario" />
+                <label for="username">Email</label>
+                <input id="username" type="text" [(ngModel)]="email" name="username" #usernameInput="ngModel"
+                    required placeholder="Ingrese su correo" />
                 @if (usernameInput.invalid && usernameInput.touched) {
-                <p class="error-message">El usuario es
+                <p class="error-message">El Correo es
                     obligatorio.</p>
                 }
 
@@ -25,7 +25,7 @@
                 }
 
             </div>
-            <button type="submit" [disabled]="!username || !password">Ingresar</button>
+            <button type="submit" [disabled]="!email || !password">Ingresar</button>
         </form>
         <div class="google-login">
             <button id="google-login" class="google-btn" (click)="loginGoogle()">
@@ -33,11 +33,11 @@
             </button>
           </div>
         <div class="register">
-            <p>No tienes cuenta? <a (click)="toggleRegisterForm()">Registrarse</a></p>
+            <p>No tienes cuenta? <a class="obtion" (click)="toggleRegisterForm()">Registrarse</a></p>
         </div>
 
         <div class="register">
-            <p>Recuperar? <a (click)="resetPassword()">Recuperar</a></p>
+            <p>Recuperar? <a class="obtion" (click)="resetPassword()">Recuperar</a></p>
         </div>
     </div>
     }

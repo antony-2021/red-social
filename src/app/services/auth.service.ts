@@ -1,7 +1,10 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider } from '@angular/fire/auth';
+import { UserService } from './user.service';
+import { UserEntity } from '../model/user-entity';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,9 @@ export class AuthService {
   constructor(
     private firebaseAuthenticationService: AngularFireAuth,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private userService: UserService,
+    private alertService: AlertService
   ) {
     this.firebaseAuthenticationService.authState.subscribe((user) => {
       if (user) {
@@ -22,11 +27,12 @@ export class AuthService {
         try {
           localStorage.setItem('user', 'null');
         } catch (error) {
-          
+
         }
       }
     })
   }
+
 
   logInWithEmailAndPassword(email: string, password: string) {
     return this.firebaseAuthenticationService.signInWithEmailAndPassword(email, password)
@@ -35,31 +41,62 @@ export class AuthService {
         this.observeUserState()
       })
       .catch((error) => {
-        alert(error.message);
+        this.alertService.alertWarning(error.message);
       })
   }
 
   logInWithGoogleProvider() {
-    return this.firebaseAuthenticationService.signInWithPopup(new GoogleAuthProvider())
+    /*return this.firebaseAuthenticationService.signInWithPopup(new GoogleAuthProvider())
       .then(() => this.observeUserState())
       .catch((error: Error) => {
-        alert(error.message);
+        this.alertService.alertWarning(error.message);
+      })*/
+
+    return this.firebaseAuthenticationService.signInWithPopup(new GoogleAuthProvider())
+      .then((result) => {
+        const user = result.user; 
+        const email = user?.email; 
+        this.observeUserState();
+
+        let userEntity: UserEntity = {
+          id: '',
+          email: email+"",
+          name: '',
+          universityCareer: '',
+          academicYear: 0,
+          urlImage: '',
+          enabled: false
+        }
+        this.userService.add(userEntity)
       })
+      .catch((error: Error) => {
+        alert(error.message);
+      });
   }
 
-  signUpWithEmailAndPassword(email: string, password: string) {
+  signUpWithEmailAndPassword(name: string, email: string, password: string) {
     return this.firebaseAuthenticationService.createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
+        let user: UserEntity = {
+          id: '',
+          email: email,
+          name: name,
+          universityCareer: '',
+          academicYear: 0,
+          urlImage: '',
+          enabled: true
+        }
+        this.userService.add(user)
         this.userData = userCredential.user
         this.observeUserState()
       })
       .catch((error) => {
-        alert(error.message);
+        this.alertService.alertWarning(error.message);
       })
   }
 
-  recoveryPassword(email:string){
-    let message=""
+  recoveryPassword(email: string) {
+    let message = ""
     this.firebaseAuthenticationService
       .sendPasswordResetEmail(email)
       .then(() => {

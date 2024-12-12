@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { AlertService } from '../../services/alert.service';
 import Swal from 'sweetalert2';
+import { UserService } from '../../services/user.service';
+import { UserEntity } from '../../model/user-entity';
 
 @Component({
   selector: 'app-login',
@@ -11,29 +13,29 @@ import Swal from 'sweetalert2';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
-  username: string = '';
+export class LoginComponent implements OnInit{
+  email: string = '';
   password: string = '';
   showRegisterForm: boolean = false;
   name: string = '';
-  email: string = '';
 
 
-  constructor(private authService: AuthService, private alertService: AlertService) { }
+  constructor(private authService: AuthService, private alertService: AlertService, private userService:UserService) { }
+  ngOnInit(): void {
+    this.userService.getUserByEmail("david@gmail.co").then((user)=>console.log(user))
+    
+  }
 
   onSubmitLogin() {
-    if (this.username && this.password) {
-      console.log('Login exitoso:', { username: this.username, password: this.password });
-      this.alertService.alertSuccessful("Inicio de sesión exitoso");
-
-      this.logIn(this.username, this.password);
+    if (this.email && this.password) {
+      this.logIn(this.email, this.password);
     } else {
-      this.alertService.alertSuccessful("Por favor, complete todos los campos.");
+      this.alertService.alertWarning("Por favor, complete todos los campos.");
     }
   }
 
   onSubmitRegister() {
-    this.signUp(this.email, this.password);
+    this.signUp(this.name, this.email, this.password);
     this.alertService.alertSuccessful("Registro exitoso");
   }
 
@@ -50,8 +52,9 @@ export class LoginComponent {
     this.authService.logInWithGoogleProvider();
   }
 
-  signUp(email: string, password: string) {
-    this.authService.signUpWithEmailAndPassword(email, password);
+  signUp(name:string, email: string, password: string) {
+    this.authService.signUpWithEmailAndPassword(name, email, password);
+    //this.authService.signUpWithEmailAndPassword(email, password)
   }
 
   logInWithGoogle() {
