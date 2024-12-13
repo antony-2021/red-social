@@ -5,5 +5,7 @@ export interface UserEntity {
     universityCareer:string,
     academicYear:number,
     urlImage:string,
-    enabled:boolean
+    enabled:boolean,
+
+    idGroups:string[]
 }

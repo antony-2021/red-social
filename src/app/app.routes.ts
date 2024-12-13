@@ -21,4 +21,11 @@ export const routes: Routes = [
         (m) => m.MiPerfilComponent
       ),
   },
+  {
+    path: 'grupo-estudio',
+    loadComponent: () =>
+      import('./components/grupo-estudio/grupo-estudio.component').then(
+        (m) => m.GrupoEstudioComponent
+      ),
+  },
 ];

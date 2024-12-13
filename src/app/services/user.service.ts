@@ -13,6 +13,7 @@ import {
   where,
   getDocs,
   getDoc,
+  arrayUnion,
 } from '@angular/fire/firestore';
 //import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, query, where, getDocs } from '@angular/fire/firestore';
 
@@ -23,7 +24,7 @@ export class UserService {
   private _firestore = inject(Firestore);
   private _collection = collection(this._firestore, 'users');
 
-  constructor() {}
+  constructor() { }
 
   /* public add(user: UserEntity) {
     this.getUserByEmail(user.email).then((response)=>{
@@ -54,6 +55,7 @@ export class UserService {
             academicYear: user.academicYear,
             urlImage: user.urlImage,
             enabled: user.enabled,
+            idGroups: user.idGroups,
           };
           const contactData = { ...userDTO };
           return addDoc(this._collection, contactData);
@@ -80,6 +82,7 @@ export class UserService {
       academicYear: user.academicYear,
       urlImage: user.urlImage,
       enabled: user.enabled,
+      idGroups: user.idGroups,
     });
   }
 
@@ -118,4 +121,22 @@ export class UserService {
         });
     });
   }
+
+
+  async addGroup(email: string, idGroup: string): Promise<void> {
+    const userQuery = query(this._collection, where('email', '==', email));
+    const querySnapshot = await getDocs(userQuery);
+  
+    if (!querySnapshot.empty) {
+      const userDoc = querySnapshot.docs[0];
+      const userId = userDoc.id;  
+      const userDocRef = doc(this._firestore, `users/${userId}`);
+      return updateDoc(userDocRef, {
+        idGroups: arrayUnion(idGroup),
+      });
+    } else {
+      throw new Error('Usuario no encontrado');
+    }
+  }
+  
 }
