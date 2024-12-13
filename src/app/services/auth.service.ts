@@ -7,10 +7,10 @@ import { UserEntity } from '../model/user-entity';
 import { AlertService } from './alert.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  userData: any
+  userData: any;
 
   constructor(
     private firebaseAuthenticationService: AngularFireAuth,
@@ -23,29 +23,27 @@ export class AuthService {
       if (user) {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
-        localStorage.setItem("email", user?.email+"")
+        localStorage.setItem('email', user?.email + '');
       } else {
         try {
           localStorage.setItem('user', 'null');
-          localStorage.setItem("email", 'null')
-        } catch (error) {
-
-        }
+          localStorage.setItem('email', 'null');
+        } catch (error) {}
       }
-    })
+    });
   }
 
-
   logInWithEmailAndPassword(email: string, password: string) {
-    return this.firebaseAuthenticationService.signInWithEmailAndPassword(email, password)
+    return this.firebaseAuthenticationService
+      .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        this.userData = userCredential.user
-        this.observeUserState()
-        localStorage.setItem("email", email)
+        this.userData = userCredential.user;
+        this.observeUserState();
+        localStorage.setItem('email', email);
       })
       .catch((error) => {
         this.alertService.alertWarning(error.message);
-      })
+      });
   }
 
   logInWithGoogleProvider() {
@@ -55,22 +53,23 @@ export class AuthService {
         this.alertService.alertWarning(error.message);
       })*/
 
-    return this.firebaseAuthenticationService.signInWithPopup(new GoogleAuthProvider())
+    return this.firebaseAuthenticationService
+      .signInWithPopup(new GoogleAuthProvider())
       .then((result) => {
-        const user = result.user; 
-        const email = user?.email; 
+        const user = result.user;
+        const email = user?.email;
         this.observeUserState();
 
         let userEntity: UserEntity = {
           id: '',
-          email: email+"",
+          email: email + '',
           name: '',
           universityCareer: '',
           academicYear: 0,
           urlImage: '',
-          enabled: false
-        }
-        this.userService.add(userEntity)
+          enabled: false,
+        };
+        this.userService.add(userEntity);
       })
       .catch((error: Error) => {
         alert(error.message);
@@ -78,7 +77,8 @@ export class AuthService {
   }
 
   signUpWithEmailAndPassword(name: string, email: string, password: string) {
-    return this.firebaseAuthenticationService.createUserWithEmailAndPassword(email, password)
+    return this.firebaseAuthenticationService
+      .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         let user: UserEntity = {
           id: '',
@@ -87,25 +87,26 @@ export class AuthService {
           universityCareer: '',
           academicYear: 0,
           urlImage: '',
-          enabled: true
-        }
-        this.userService.add(user)
+          enabled: true,
+        };
+        this.userService.add(user);
 
-        localStorage.setItem("email", user?.email+"")
-        this.userData = userCredential.user
-        this.observeUserState()
+        localStorage.setItem('email', user?.email + '');
+        this.userData = userCredential.user;
+        this.observeUserState();
       })
       .catch((error) => {
         this.alertService.alertWarning(error.message);
-      })
+      });
   }
 
   recoveryPassword(email: string) {
-    let message = ""
+    let message = '';
     this.firebaseAuthenticationService
       .sendPasswordResetEmail(email)
       .then(() => {
-        message = 'Te hemos enviado un enlace de recuperación a tu correo electrónico.';
+        message =
+          'Te hemos enviado un enlace de recuperación a tu correo electrónico.';
       })
       .catch((error) => {
         console.error('Error al enviar el enlace de recuperación:', error);
@@ -115,8 +116,8 @@ export class AuthService {
 
   observeUserState() {
     this.firebaseAuthenticationService.authState.subscribe((userState) => {
-      userState && this.ngZone.run(() => this.router.navigate(['dashboard']))
-    })
+      userState && this.ngZone.run(() => this.router.navigate(['dashboard']));
+    });
   }
 
   get isLoggedIn(): boolean {
@@ -127,12 +128,16 @@ export class AuthService {
   logOut() {
     return this.firebaseAuthenticationService.signOut().then(() => {
       localStorage.removeItem('user');
-      localStorage.removeItem("email")
+      localStorage.removeItem('email');
       this.router.navigate(['login']);
-    })
+    });
   }
 
-  getEmail(){
-    return localStorage.getItem("email")+"";
+  getEmail() {
+    return localStorage.getItem('email') + '';
+  }
+
+  getId() {
+    return localStorage.getItem('user');
   }
 }
