@@ -1,0 +1,41 @@
+<div class="div-body">
+    <div class="custom-swal-popup">
+
+        <div class="div-header">
+            <h1>{{group.title}}</h1>
+            <img src="{{group.urlImage}}" alt="Group Image">
+            <div class="add-comment">
+                <button (click)="nuevaPublicacion()">Nueva Publicación</button>
+            </div>
+            <p>_______________________________________________</p>
+        </div>
+        <br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br>
+
+
+        @for (item of [1,1,1,1,1,1,]; track $index) {
+            <div class="post">
+                <h2>Title</h2>
+                <img src="{{group.urlImage}}" alt="Group Image">
+                <p>----</p>
+                <div class="comments">
+                    <h3>Comments</h3>
+                    <ul>
+                        <li>
+                            aaaa-davidabel
+                        </li>
+                    </ul>
+    
+                    <div class="add-comment">
+                        <textarea rows="3" placeholder="Add a comment..."></textarea>
+                        <button>Add Comment</button>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <!-- Additional posts can be added dynamically here -->
+    </div>
+</div>

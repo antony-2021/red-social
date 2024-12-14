@@ -30,6 +30,8 @@ export class PublicationService {
       interaction: publication.interaction,
       title: publication.title,
       urlImage: publication.urlImage,
+      emailUser:publication.emailUser,
+      idGroup:publication.idGroup
     }
     const contactData = { ...publicationDTO };
     return addDoc(this._collection, contactData);

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import {
   addDoc,
   collection,
@@ -10,6 +10,8 @@ import {
   updateDoc,
   docData,
   arrayUnion,
+  query,
+  where,
 } from '@angular/fire/firestore';
 import { GroupEntity } from '../model/group-entity';
 
@@ -65,5 +67,22 @@ export class GroupService {
       emailUsers: arrayUnion(email),
     });
   }
+
+  getGroupByEmail(email:string): Observable<GroupEntity[]> {
+    const queryRef = query(this._collection, where('emailUsers', 'array-contains', email)); 
+    return collectionData(queryRef, { idField: 'id' }) as Observable<GroupEntity[]>;
+  }
+
+  isUserInGroup(groupId: string, email: string): Observable<boolean> {
+    const groupDocRef = doc(this._collection, groupId); 
+    return docData(groupDocRef).pipe(
+      map((groupData: any) => groupData?.emailUsers?.includes(email) ?? false), 
+      catchError((error) => {
+        console.error('Error al verificar el usuario en el grupo:', error);
+        return of(false); 
+      })
+    );
+  }
+  
   
 }
