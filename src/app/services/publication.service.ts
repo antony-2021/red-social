@@ -10,7 +10,7 @@ import {
   updateDoc,
   docData,
 } from '@angular/fire/firestore';
-import { PublicationEntity } from '../model/publication-entity';
+import { Interaction, PublicationEntity } from '../model/publication-entity';
 
 
 @Injectable({
@@ -30,8 +30,8 @@ export class PublicationService {
       interaction: publication.interaction,
       title: publication.title,
       urlImage: publication.urlImage,
-      emailUser:publication.emailUser,
-      idGroup:publication.idGroup
+      emailUser: publication.emailUser,
+      idGroup: publication.idGroup
     }
     const contactData = { ...publicationDTO };
     return addDoc(this._collection, contactData);
@@ -42,10 +42,10 @@ export class PublicationService {
   }
 
   public getById(id: string): Observable<PublicationEntity> {
-    const docRef = doc(this._collection, id); 
+    const docRef = doc(this._collection, id);
     return docData(docRef, { idField: 'id' }) as Observable<PublicationEntity>;
   }
-  
+
 
   public update(publication: PublicationEntity): Promise<void> {
     const contactDocRef = doc(this._firestore, `publication/${publication.id}`);
@@ -61,4 +61,58 @@ export class PublicationService {
     const contactDocRef = doc(this._firestore, `publication/${id}`);
     return deleteDoc(contactDocRef);
   }
+
+
+  public listByIdGroup(idGroup: string): Observable<PublicationEntity[]> {
+    const list = collectionData(this._collection, { idField: 'id' }) as Observable<PublicationEntity[]>;
+
+    return new Observable<PublicationEntity[]>((observer) => {
+      list.subscribe((publications) => {
+        const filteredPublications = publications.filter(p => p.idGroup === idGroup);
+        observer.next(filteredPublications);
+        observer.complete();
+      });
+    });
+  }
+
+ 
+  public updateInteractionByEmail(idPublication: string, email: string, like: boolean, comment?: string): void {
+    const docRef = doc(this._firestore, `publication/${idPublication}`);
+
+    docData(docRef, { idField: 'id' }).toPromise()
+      .then((publicationSnapshot: PublicationEntity | undefined) => {
+        if (publicationSnapshot) {
+          console.log('Publication snapshot:', publicationSnapshot);
+
+          const publication = publicationSnapshot;
+          const interaction = publication.interaction.find(i => i.emailUser === email);
+
+          if (interaction) {
+            if (comment) {
+              interaction.comentarios.push(comment);  
+            }
+            interaction.like = like;
+
+            updateDoc(docRef, { interaction: publication.interaction })
+              .then(() => {
+                console.log('Documento actualizado correctamente');
+              })
+              .catch(error => {
+                console.error('Error al actualizar el documento:', error);
+              });
+          } else {
+            console.log('No se encontró interacción para este email');
+          }
+        } else {
+          console.log('No se encontró la publicación');
+        }
+      })
+      .catch((error: any) => {
+        console.error('Error al obtener el documento de Firestore:', error);
+      });
+  }
+  
+  
+  
+
 }

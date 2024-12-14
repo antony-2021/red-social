@@ -30,7 +30,7 @@ export class FeedComponent implements OnInit {
   ngOnInit(): void {
     this.groupService.getById(this.idGroup).subscribe(group => this.group = group);
     this.emailUser = this.authService.getEmail()
-    
+    this.publicationService.listByIdGroup(this.idGroup).forEach(list=>this.publicationList=list);
   }
 
 
@@ -118,5 +118,12 @@ export class FeedComponent implements OnInit {
     });
   }
 
+  addComment(idPublication: string, comment: string){    
+    this.publicationService.updateInteractionByEmail(idPublication, this.emailUser, false, comment);
+  }
 
+  addLike(idPublication: string, like: boolean){
+    
+    this.publicationService.updateInteractionByEmail(idPublication, this.emailUser, like, "");
+  }
 }

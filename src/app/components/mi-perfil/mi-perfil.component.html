@@ -1,1 +1,33 @@
-<main></main>
+<main>
+    <section class="header-section" *ngIf="user">
+        <header class="header-img-box">
+            <img class="img-perfil" [src]="
+            'https://i.pinimg.com/736x/9a/9e/f8/9a9ef8e3e7c42ec8e475c1a238f02e75.jpg'
+          " alt="Foto de perfil" />
+        </header>
+        <div class="box-details">
+            <p class="user-name">{{ user.name }}</p>
+        </div>
+    </section>
+
+    <section class="publications-container">
+        <div *ngFor="let publication of [1, 2, 3, 4, 5]; let i = index" class="publication-card">
+            <div class="publication-header">
+                <h3 class="publication-title">Publicación {{ i + 1 }}</h3>
+            </div>
+            <div class="carousel-container">
+                <button class="carousel-btn left" (click)="previousImage(i)">
+                    &lt;
+                </button>
+                <div class="carousel-images">
+                    <img *ngFor="let img of imgs; let j = index" [src]="img" [class.active]="j === activeImage[i]"
+                        class="publication-image" alt="Imagen {{ j + 1 }}" />
+                </div>
+                <button class="carousel-btn right" (click)="nextImage(i)">&gt;</button>
+            </div>
+            <div class="publication-description">
+                <p>Descripción de la publicación {{ i + 1 }}</p>
+            </div>
+        </div>
+    </section>
+</main>

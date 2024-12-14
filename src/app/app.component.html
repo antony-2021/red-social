@@ -12,22 +12,21 @@
                 <span>Home</span>
                 <div class="link-effect"></div>
             </a>
-            <a href="#" class="nav-link">
-                <span>Products</span>
-                <div class="link-effect"></div>
-            </a>
-            <a href="#" class="nav-link">
-                <span>Services</span>
-                <div class="link-effect"></div>
-            </a>
-            <a href="/edit-perfil" class="nav-link">
-                <span>Perfil</span>
-                <div class="link-effect"></div>
-            </a>
-            <a href="/grupo-estudio" class="nav-link">
-                <span>Grupos</span>
-                <div class="link-effect"></div>
-            </a>
+            @if (isLogin() | async){
+                <a href="/mi-perfil" class="nav-link">
+                    <span>Feed</span>
+                    <div class="link-effect"></div>
+                </a>
+                <a href="/edit-perfil" class="nav-link">
+                    <span>Perfil</span>
+                    <div class="link-effect"></div>
+                </a>
+                <a href="/grupo-estudio" class="nav-link">
+                    <span>Grupos</span>
+                    <div class="link-effect"></div>
+                </a>
+            }
+            
         </div>
 
         @if (isLogin() | async) {

@@ -8,15 +8,34 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   try {
-  
-    if(authService.isLoggedIn){
+
+    if (authService.isLoggedIn) {
       router.navigate(['dashboard']);
-      
-    }else{
+
+    } else {
       router.navigate(['login']);
     }
     return true
   } catch (error) {
     return true;
   }
+};
+
+
+export const auth3Guard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  try {
+    if (authService.isLoggedIn) {
+      router.navigate(['dashboard']);
+    } else {
+      router.navigate(['']);
+    }
+
+    return true
+  } catch (error) {
+    return true;
+  }
+
 };

@@ -1,0 +1,75 @@
+.header-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.img-perfil {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.box-details {
+    margin-top: 10px;
+}
+
+.publications-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 20px;
+}
+
+.publication-card {
+
+    flex: 0 0 auto;
+    width: 300px;
+    background: #1e293b;
+    border-radius: 8px;
+    padding: 15px;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.carousel-images {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    justify-content: center;
+}
+
+.publication-image {
+    width: 100%;
+    display: none;
+}
+
+.publication-image.active {
+    display: block;
+}
+
+.carousel-btn {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.carousel-btn.left {
+    position: absolute;
+    left: 10px;
+}
+
+.carousel-btn.right {
+    position: absolute;
+    right: 10px;
+}
