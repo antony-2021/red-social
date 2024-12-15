@@ -8,7 +8,7 @@
         <h1>Tus Grupos</h1>
         <div class="list-group">
                 @for (group of myGroupEntityList; track $index) {
-                    <button class="group">
+                    <button class="group" (click)="verGrupo(group.id)">
                         <div class="group-header">
                             <img class="group-icon" src="{{group.urlImage}}" alt="Microservicios">
                             <span class="group-name">{{group.title}}</span>
@@ -19,7 +19,8 @@
                     </button>
                 }
         </div>
-    </div>
+    </div> 
+    
     <div class="main">
         <div class="div-body">
             @for (group of groupEntityList; track $index) {

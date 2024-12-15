@@ -16,6 +16,7 @@ export class EditPerfilComponent implements OnInit {
   id = ""
   email = ""
   name = ""
+  urlImage=""
   universityCareer = ""
   academicYear = 0
   enabled = false
@@ -31,6 +32,7 @@ export class EditPerfilComponent implements OnInit {
         this.universityCareer = user.universityCareer
         this.academicYear = user.academicYear
         this.enabled = user.enabled
+        this.urlImage = user.urlImage
       } else {
         console.error("El usuario no existe.");
 
@@ -41,27 +43,13 @@ export class EditPerfilComponent implements OnInit {
   }
 
   guardarDatos() {
-/**    let user: UserEntity = {
-      id: this.id,
-      email: this.email,
-      name: this.name,
-      universityCareer: this.universityCareer,
-      academicYear: this.academicYear,
-      urlImage: '',
-      enabled: this.enabled,
-      idGroups: []
-    }
-    this.userService.update(user);
-
-    this.alertService.alertSuccessful("Se guardo correctamente los datos")
- */
     this.userService.getUserByEmail(this.authService.getEmail()).then((user) => {
       if (user != null) {
         user.email = this.email
         user.name = this.name
         user.universityCareer = this.universityCareer
         user.academicYear = this.academicYear
-        user.urlImage = ''
+        user.urlImage = this.urlImage
         user.enabled = this.enabled
 
         this.userService.update(user);
@@ -74,4 +62,20 @@ export class EditPerfilComponent implements OnInit {
     });
   }
 
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input?.files?.[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      // Leer archivo como URL base64
+      reader.onload = () => {
+        this.urlImage = reader.result as string; // Guardar el resultado en urlImage
+      };
+
+      reader.readAsDataURL(file); // Iniciar la lectura del archivo
+    }
+  }
 }

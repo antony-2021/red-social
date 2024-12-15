@@ -21,8 +21,6 @@ export class LoginComponent implements OnInit{
 
   constructor(private authService: AuthService, private alertService: AlertService, private userService:UserService) { }
   ngOnInit(): void {
-    this.userService.getUserByEmail("david@gmail.co").then((user)=>console.log(user))
-    
   }
 
   onSubmitLogin() {

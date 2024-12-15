@@ -1,78 +1,131 @@
 .div-header{
   position: fixed;
-  background-color: #fafafa;
-  margin-top: -80px;
+  background-color: white;
+  margin-top: -50px;
 }
 
-.post {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 20px;
-  background-color: #fafafa;
-}
-
-.post h2 {
-  margin: 0 0 10px;
-  font-size: 18px;
-  color: #444;
-}
-
-.post p {
-  margin: 0 0 10px;
-  color: #555;
-  line-height: 1.6;
-}
-
+/* Estilos generales para la sección de comentarios */
 .comments {
-  margin-top: 15px;
+  margin-top: 20px;
+  font-family: 'Arial', sans-serif;
 }
 
-.comments h3 {
-  font-size: 16px;
-  color: #666;
-  margin: 0 0 10px;
+/* Título de la sección de comentarios */
+.comments-title {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: 600;
 }
 
-.comments ul {
+/* Lista de comentarios */
+.comments-list {
   list-style: none;
   padding: 0;
 }
 
-.comments ul li {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
+/* Cada comentario */
+.comment-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #fafafa;
+}
+
+/* Cabecera del comentario: nombre de usuario y like */
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Nombre del usuario */
+.comment-user-name {
   font-size: 14px;
-  color: #333;
+  font-weight: bold;
+  color: #555;
 }
 
-.comments ul li:last-child {
-  border-bottom: none;
+/* Icono de like */
+.comment-like-icon {
+  color: #ff9900;
+  font-size: 16px;
 }
 
-.add-comment {
+/* Lista de comentarios de un usuario */
+.comment-text-list {
+  padding: 0;
   margin-top: 10px;
 }
 
-.add-comment textarea {
+/* Texto de un comentario */
+.comment-text {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+/* Formulario para agregar comentario */
+.add-comment {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Área de texto para el comentario */
+.comment-textarea {
   width: 100%;
   border: 1px solid #ddd;
   border-radius: 5px;
-  padding: 10px;
+  padding: 12px;
   font-size: 14px;
   resize: none;
+  margin-bottom: 10px;
+  background-color: #fff;
+  box-sizing: border-box;
 }
 
-.add-comment button {
-  margin-top: 10px;
+/* Botones de agregar comentario y like */
+.add-comment-button,
+.like-button {
   padding: 10px 15px;
-  background-color: #007bff;
-  color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-bottom: 10px;
 }
 
-.add-comment button:hover {
+.add-comment-button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.add-comment-button:hover {
   background-color: #0056b3;
+}
+
+.like-button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.like-button:hover {
+  background-color: #0056b3;
+}
+
+/* Diseño responsivo */
+@media (max-width: 600px) {
+  .add-comment {
+    flex-direction: column;
+  }
+
+  .add-comment-button,
+  .like-button {
+    width: 100%;
+  }
+
+  .comment-textarea {
+    width: 100%;
+  }
 }

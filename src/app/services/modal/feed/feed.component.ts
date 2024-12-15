@@ -3,9 +3,9 @@ import { GroupService } from '../../group.service';
 import { GroupEntity } from '../../../model/group-entity';
 import { FeedService } from '../feed.service';
 import Swal from 'sweetalert2';
-import { PublicationEntity } from '../../../model/publication-entity';
+import { PublicationGroupEntity } from '../../../model/publication-group-entity';
 import { AuthService } from '../../auth.service';
-import { PublicationService } from '../../publication.service';
+import { PublicationGroupService } from '../../publication-group.service';
 
 @Component({
   selector: 'app-feed',
@@ -23,9 +23,9 @@ export class FeedComponent implements OnInit {
   }
   idGroup: string = FeedService.idFeedGroup
   emailUser: string = ""
-  publicationList:PublicationEntity[]=[]
+  publicationList:PublicationGroupEntity[]=[]
 
-  constructor(private groupService: GroupService, private authService: AuthService, private publicationService: PublicationService) { }
+  constructor(private groupService: GroupService, private authService: AuthService, private publicationService: PublicationGroupService) { }
 
   ngOnInit(): void {
     this.groupService.getById(this.idGroup).subscribe(group => this.group = group);
@@ -92,14 +92,14 @@ export class FeedComponent implements OnInit {
       if (result.isConfirmed) {
         const { title, description, urlImage } = result.value!;
 
-        const newPublication: PublicationEntity = {
+        const newPublication: PublicationGroupEntity = {
           id: '',
           title: title,
           description: description,
           urlImage: urlImage,
           interaction: [],
           emailUser: this.emailUser,
-          idGroup: this.idGroup
+          idGroup: this.idGroup,
         };
 
         this.publicationService.add(newPublication)
@@ -120,10 +120,12 @@ export class FeedComponent implements OnInit {
 
   addComment(idPublication: string, comment: string){    
     this.publicationService.updateInteractionByEmail(idPublication, this.emailUser, false, comment);
+    this.publicationService.listByIdGroup(this.idGroup).forEach(list=>this.publicationList=list);
   }
 
-  addLike(idPublication: string, like: boolean){
-    
-    this.publicationService.updateInteractionByEmail(idPublication, this.emailUser, like, "");
+  addLike(idPublication: string){
+    this.publicationService.updateInteractionByEmail(idPublication, this.emailUser, true, "");
+    this.publicationService.updateInteractionByEmail(idPublication, this.emailUser, true, null);
+    this.publicationService.listByIdGroup(this.idGroup).forEach(list=>this.publicationList=list);
   }
 }

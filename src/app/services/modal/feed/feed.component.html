@@ -5,7 +5,7 @@
             <h1>{{group.title}}</h1>
             <img src="{{group.urlImage}}" alt="Group Image">
             <div class="add-comment">
-                <button (click)="nuevaPublicacion()">Nueva Publicación</button>
+                <button (click)="nuevaPublicacion()" class="add-comment-button">Nueva Publicación</button>
             </div>
             <p>_______________________________________________</p>
         </div>
@@ -21,28 +21,36 @@
             <p>{{publication.description}}</p>
 
             <div class="comments">
-                <h3>Comments</h3>
-                <ul>
+                <h3 class="comments-title">Comments</h3>
+                <ul class="comments-list">
+                    <!-- Recorrer las interacciones de la publicación -->
                     @for (interaction of publication.interaction; track $index) {
-                    <p>
-                        {{interaction.emailUser}}
-                        @if (interaction.like) {
-                        👍
-                        }
-                    </p>
-
-                    @for (c of interaction.comentarios; track $index) {
-                    <li>{{c}}</li>
-                    }
+                    <li class="comment-item">
+                        <div class="comment-header">
+                            <span class="comment-user-name">{{interaction.emailUser}}</span>
+                            @if (interaction.like) {
+                            <span class="comment-like-icon">👍</span>
+                            }
+                        </div>
+                        <ul class="comment-text-list">
+                            <!-- Recorrer los comentarios de la interacción -->
+                            @for (c of interaction.comentarios; track $index) {
+                            <li class="comment-text">{{c}}</li>
+                            }
+                        </ul>
+                    </li>
                     }
                 </ul>
 
                 <div class="add-comment">
-                    <textarea rows="3" placeholder="Add a comment..." #comment></textarea>
-                    <button (click)="addComment(publication.id, comment.value)">Add Comment</button>&nbsp;&nbsp;&nbsp;
-                    <button (click)="addLike(publication.id, true)">👍</button>
+                    <textarea class="comment-textarea" rows="3" placeholder="Add a comment..." #comment></textarea>
                 </div>
+                <button class="like-button" (click)="addComment(publication.id, comment.value)">Add Comment</button>
+                <button class="like-button" (click)="addLike(publication.id)">👍 Like</button>
             </div>
+
+
+
         </div>
         }
 

@@ -7,5 +7,4 @@ export interface UserEntity {
     urlImage:string,
     enabled:boolean,
 
-    idGroups:string[]
 }

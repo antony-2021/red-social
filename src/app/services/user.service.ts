@@ -55,7 +55,6 @@ export class UserService {
             academicYear: user.academicYear,
             urlImage: user.urlImage,
             enabled: user.enabled,
-            idGroups: user.idGroups,
           };
           const contactData = { ...userDTO };
           return addDoc(this._collection, contactData);
@@ -82,7 +81,6 @@ export class UserService {
       academicYear: user.academicYear,
       urlImage: user.urlImage,
       enabled: user.enabled,
-      idGroups: user.idGroups,
     });
   }
 

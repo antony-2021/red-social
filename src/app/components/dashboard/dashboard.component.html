@@ -1,2 +1,72 @@
-<p>dashboard works!</p>
-<button (click)="logOut()">Login</button>
+<div class="container">
+    <section class="publications-container">
+        @for (publication of publicationUserEntityList; track $index) {
+        <div class="publication-card">
+
+            <div class="content-card">
+                <div class="publication-header">
+                    <h6>{{publication.emailUser}}</h6>
+                    <h2 class="publication-title">{{ publication.title }}</h2>
+                </div>
+                <div class="carousel-container">
+
+                    <div class="carousel-images">
+                        <img class="publication-image"
+                            [src]="publication.urlImage || 'https://png.pngitem.com/pimgs/s/150-1503945_transparent-user-png-default-user-image-png-png.png'" />
+                    </div>
+                </div>
+                <div class="publication-description">
+                    <p>{{publication.description}}</p>
+                </div>
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <div class="actions-card">
+
+
+                <div class="comments">
+                    <h3>Comments</h3>
+
+                    <!-- Contenedor de los comentarios con scroll -->
+                    <div class="comments-list">
+                        <ul>
+                            <!-- Itera sobre los comentarios en Angular -->
+                            @for (interaction of publication.interaction; track $index) {
+                            <li>
+                                <p style="color: azure;"> 
+                                    {{ interaction.emailUser }} 
+                                    @if (interaction.like) {
+                                        👍
+                                    }
+                                </p>
+
+                                <ul>
+                                    @for (c of interaction.comentarios; track $index) {
+                                    <p style="color: azure;">
+                                        -{{ c }}
+                                    </p>
+                                    }
+                                </ul>
+                            </li>
+                            }
+
+                        </ul>
+                    </div>
+
+                    <!-- Sección para agregar un comentario -->
+                    <div class="add-comment">
+                        <textarea class="textarea" rows="3" placeholder="Add a comment..." #comment></textarea>
+                        <button (click)="addComment(publication.id, comment.value)">Add Comment</button>
+                        <button (click)="addLike(publication.id)">👍</button>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        }
+
+    </section>
+</div>

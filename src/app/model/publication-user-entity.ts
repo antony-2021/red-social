@@ -1,10 +1,9 @@
-export interface PublicationEntity {
+export interface PublicationUserEntity {
     id:string,
     emailUser:string,
-    idGroup:string,
     title:string,
     description:string,
-    urlImage:string[],
+    urlImage:string,
     interaction:Interaction[]
 }
 

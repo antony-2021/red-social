@@ -68,7 +68,6 @@ export class AuthService {
           academicYear: 0,
           urlImage: '',
           enabled: false,
-          idGroups: []
         };
         this.userService.add(userEntity);
       })
@@ -89,7 +88,6 @@ export class AuthService {
           academicYear: 0,
           urlImage: '',
           enabled: true,
-          idGroups: []
         };
         this.userService.add(user);
 
